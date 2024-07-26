@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  apigateway:
+    build:
+      context: .
+      dockerfile: ApiGateway/Dockerfile
+    ports:
+      - "8080:80"
+    depends_on:
+      - user-service
+      - order-service
+    volumes:
+      - ./ApiGateway/ocelot.json:/app/ocelot.json
+
+  user-service:
+    build:
+      context: .
+      dockerfile: UserService/Dockerfile
+    ports:
+      - "5001:80"
+    depends_on:
+      - rabbitmq
+
+  order-service:
+    build:
+      context: .
+      dockerfile: OrderService/Dockerfile
+    ports:
+      - "5002:80"
+    depends_on:
+      - rabbitmq
+
+  rabbitmq:
+    image: "rabbitmq:3-management"
+    ports:
+      - "5672:5672"
+      - "15672:15672"
