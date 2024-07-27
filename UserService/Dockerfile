@@ -2,7 +2,6 @@
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
 EXPOSE 80
-EXPOSE 443
 
 # Utiliza una imagen base de .NET Core SDK para construir la aplicación
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
@@ -24,4 +23,6 @@ RUN dotnet publish "UserService.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+# Configura la aplicación para escuchar en HTTP
+ENV ASPNETCORE_URLS=http://+:80
 ENTRYPOINT ["dotnet", "UserService.dll"]
