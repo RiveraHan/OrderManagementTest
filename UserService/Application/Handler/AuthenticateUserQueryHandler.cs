@@ -22,7 +22,6 @@ namespace UserService.Application.Handlers
             {
                 return null;
             }
-            // Aquí deberías generar y devolver un token JWT.
             return "fake-jwt-token";
         }
     }

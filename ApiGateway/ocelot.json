@@ -1,7 +1,7 @@
 {
     "Routes": [
         {
-            "DownstreamPathTemplate": "/api/users/{everything}",
+            "DownstreamPathTemplate": "/api/User/{everything}",
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
@@ -9,7 +9,7 @@
                     "Port": 80
                 }
             ],
-            "UpstreamPathTemplate": "/api/users/{everything}",
+            "UpstreamPathTemplate": "/api/User/{everything}",
             "UpstreamHttpMethod": [
                 "GET",
                 "POST",
@@ -18,7 +18,7 @@
             ]
         },
         {
-            "DownstreamPathTemplate": "/api/orders/{everything}",
+            "DownstreamPathTemplate": "/api/Order/{everything}",
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
@@ -26,7 +26,7 @@
                     "Port": 80
                 }
             ],
-            "UpstreamPathTemplate": "/api/orders/{everything}",
+            "UpstreamPathTemplate": "/api/Order/{everything}",
             "UpstreamHttpMethod": [
                 "GET",
                 "POST",

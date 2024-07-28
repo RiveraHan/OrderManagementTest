@@ -21,7 +21,6 @@ public class Startup
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
         services.AddTransient<IUserRepository, UserRepository>();
 
-        // services.AddHostedService(sp => new RabbitMQMessageConsumer("rabbitmq", "order-created"));
         services.AddSingleton(sp => new RabbitMQMessageConsumer("rabbitmq", "order-created"));
 
         services.AddControllers();
