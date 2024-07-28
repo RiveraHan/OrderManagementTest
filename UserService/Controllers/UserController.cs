@@ -1,5 +1,5 @@
-using Microsoft.AspNetCore.Mvc;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using UserService.Application.Commands;
 using UserService.Application.Queries;
 
@@ -7,28 +7,34 @@ namespace UserService.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class UsersController : ControllerBase
+    public class UserController : ControllerBase
     {
         private readonly IMediator _mediator;
 
-        public UsersController(IMediator mediator)
+        public UserController(IMediator mediator)
         {
             _mediator = mediator;
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CreateUserCommand command)
+        public async Task<IActionResult> Register([FromBody] CreateUserCommand command)
         {
             var userId = await _mediator.Send(command);
-            return CreatedAtAction(nameof(GetById), new { id = userId }, userId);
+            return Ok(userId);
+        }
+
+        [HttpPost("authenticate")]
+        public async Task<IActionResult> Authenticate([FromBody] AuthenticateUserQuery query)
+        {
+            var token = await _mediator.Send(query);
+            return Ok(token);
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> GetUserById(int id)
         {
-            var user = await _mediator.Send(new GetUserByIdQuery(id));
-            if (user == null)
-                return NotFound();
+            var query = new GetUserByIdQuery { UserId = id };
+            var user = await _mediator.Send(query);
             return Ok(user);
         }
     }
